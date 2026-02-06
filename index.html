@@ -223,35 +223,94 @@ for(var i=0; i < d[0].studentTasksInfo.diaryTasks[r].tracks.length ; i++){
   }
 }
 
+//==============================
+
+// d[0].studentTasksInfo.diaryTasks[5].tracks[0].json.laps[0].moving_time
+// d[0].studentTasksInfo.diaryTasks[5].tracks[0].json.laps[0].elapsed_time
 //============================
 
 
 function Valid_MaxHeart(r,t) {
   try {
 var tmp = 0;
-
+var tt = 0;
 for(var i=0; i < d[0].studentTasksInfo.diaryTasks[r].tracks.length ; i++){
- tmp = Math.max(tmp,d[0].studentTasksInfo.diaryTasks[r].tracks[i].json.max_heartrate);
+ tt = d[0].studentTasksInfo.diaryTasks[r].tracks[i].json.max_heartrate;
+if ( tt === undefined) {
+    throw new Error("Переменная tt не определена (undefined)!");
+}
+ tmp = Math.max(tmp,tt);
  }
         return tmp;
-  } catch {
+ } catch {
+      try {
+			tmp = 0;
+			tt = 0;
+			for(var i=0; i < d[0].studentTasksInfo.diaryTasks[r].tracks.length ; i++){
+			for(var j=0; j < d[0].studentTasksInfo.diaryTasks[r].tracks[i].json.laps.length ; j++){
+             tt = d[0].studentTasksInfo.diaryTasks[r].tracks[i].json.laps[j].hr ;
+
+if ( tt === undefined) {
+    throw new Error("Переменная tt2 не определена (undefined)!");
+}
+			tmp = Math.max(tmp,tt);
+				}
+			}	  
+            return tmp; 
+           } catch {
+	       	return NaN;
+	      }
     return t;
   }
 }
+
+//function Valid_AvgHeart(r,t) {
+//  try {
+//var tmp = 0;
+//for(var i=0; i < d[0].studentTasksInfo.diaryTasks[r].tracks.length ; i++){
+// tmp = tmp + d[0].studentTasksInfo.diaryTasks[r].tracks[i].json.average_heartrate;
+// }
+//        return tmp/d[0].studentTasksInfo.diaryTasks[r].tracks.length;
+//  } catch {
+//    return t;
+//  }
+//}
 
 function Valid_AvgHeart(r,t) {
   try {
 var tmp = 0;
-
+var tt = 0;
 for(var i=0; i < d[0].studentTasksInfo.diaryTasks[r].tracks.length ; i++){
- tmp = tmp + d[0].studentTasksInfo.diaryTasks[r].tracks[i].json.average_heartrate;
+ tt = d[0].studentTasksInfo.diaryTasks[r].tracks[i].json.average_heartrate;
+if ( tt === undefined) {
+    throw new Error("Переменная tt не определена (undefined)!");
+}
+ tmp = tmp+tt;
  }
         return tmp/d[0].studentTasksInfo.diaryTasks[r].tracks.length;
-  } catch {
+ } catch {
+      try {
+			tmp = 0;
+			tt = 0;
+			ttt = 0;
+			for(var i=0; i < d[0].studentTasksInfo.diaryTasks[r].tracks.length ; i++){
+			for(var j=0; j < d[0].studentTasksInfo.diaryTasks[r].tracks[i].json.laps.length ; j++){
+             tt = d[0].studentTasksInfo.diaryTasks[r].tracks[i].json.laps[j].hr ;
+
+if ( tt === undefined) {
+    throw new Error("Переменная tt2 не определена (undefined)!");
+}
+			tmp = tmp+tt;
+			ttt = ttt+1;
+				}
+			}	  
+            return tmp/ttt;
+           } catch {
+	       	return NaN;
+	      }
     return t;
   }
 }
-
 
 //============================
 function Valid_M200(r,t) {
@@ -775,6 +834,7 @@ webix.ui(
 </body>
 
 </html>
+
 
 
 
