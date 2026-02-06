@@ -199,7 +199,27 @@ for(var i=0; i < d[0].studentTasksInfo.diaryTasks[r].tracks.length ; i++){
         return tmp[s];
 
   } catch {
-    return t;
+  
+      try {
+			const tmp = [];
+			for(var i=0; i < d[0].studentTasksInfo.diaryTasks[r].tracks.length ; i++){
+			for(var j=0; j < d[0].studentTasksInfo.diaryTasks[r].tracks[i].json.laps.length ; j++){
+			tmp.push(d[0].studentTasksInfo.diaryTasks[r].tracks[i].json.laps[j].average_speed);
+				}
+			}	  
+            
+            num=(1000/tmp[s])/60;			
+			
+//			return num.toFixed(2);
+            return (Math.round(num * 100) / 100) + 0.01; 
+			
+           } catch {
+
+	       	return t;
+	
+	      }
+    
+	return t;
   }
 }
 
@@ -755,6 +775,7 @@ webix.ui(
 </body>
 
 </html>
+
 
 
 
